@@ -1,4 +1,9 @@
 from django.db import models
+from send_sms.models import message
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Slot(models.Model):
@@ -25,7 +30,7 @@ class Appointment(models.Model):
     def __str__(self):
         return "{} - {}".format(self.client, self.appointment_slot)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if Appointment.objects.filter(appointment_slot=self.appointment_slot).exists():
             print("Slot already exists")
         else:
@@ -39,3 +44,18 @@ class AppointmentReminders(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.appointment, self.reminder_date)
+
+    def save(self, *args, **kwargs):
+
+        if not self.id:
+            if self.appointment.client.mobile_number:
+                message.objects.add(
+                    to_number=self.appointment.client.mobile_number,
+                    message_body="Hi {}, This is a reminder you have an appointment on {}".format(
+                        self.appointment.client.firstname, self.reminder_date
+                    ),
+                    reminder_date=self.reminder_date,
+                )
+            else:
+                logger.warning("Client has not provided a mobile number")
+        return super(AppointmentReminders, self).save(*args, **kwargs)
