@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "client",
     "appointment",
     "send_sms",
+    "background_task",
 ]
 
 MIDDLEWARE = [
