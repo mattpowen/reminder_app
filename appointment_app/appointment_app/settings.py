@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "appointment",
     "send_sms",
     "background_task",
+    "reminder",
 ]
 
 MIDDLEWARE = [
