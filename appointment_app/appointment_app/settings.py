@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "client",
     "appointment",
     "send_sms",
+    "send_email",
     "background_task",
     "reminder",
 ]
@@ -126,4 +127,4 @@ STATIC_URL = "/static/"
 
 TWILIO_ACCOUNT_SID = "AC0170cf28d772d1efb9cbff58304a3cd6"
 # Your Auth Token from twilio.com/console
-TWILIO_AUTH_TOKEN = "9eadb1781537670293b204846286bb07"
+TWILIO_AUTH_TOKEN = "e4cd32356684a5d10924d8e320fa257d"
