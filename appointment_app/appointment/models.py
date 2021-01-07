@@ -52,7 +52,9 @@ class AppointmentReminders(models.Model):
         if not self.id:
             if self.appointment.client.mobile_number:
                 new_message = message(
-                    to_number="44".format(self.appointment.client.mobile_number),
+                    to_number="44{}".format(
+                        self.appointment.client.get_mobile_number()
+                    ),
                     message_body="Hi {}, This is a reminder you have an appointment on {}".format(
                         self.appointment.client.firstname, self.reminder_date
                     ),
